@@ -1,0 +1,2516 @@
+---
+swagger: "2.0"
+info:
+  description: "Shipment Tracking Management provides operations to track shipments."
+  version: "1.14.0"
+  title: "Shipment Tracking API"
+host: "localhost:8017"
+basePath: "/shipmentTracking/v1"
+tags:
+- name: "Shipment Tracking"
+  description: "API over Shipment Tracking domain"
+schemes:
+- "https"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+security:
+- accessToken: []
+- apiKey: []
+paths:
+  /shipmentTracking:
+    get:
+      tags:
+      - "Shipment Tracking"
+      summary: "Retrieve tracking details of a shipment"
+      operationId: "getShipmentTracking"
+      consumes: []
+      parameters:
+      - name: "X-Request-Customer-Segment"
+        in: "header"
+        description: "Header that contains information for Customer Segment"
+        required: false
+        type: "string"
+      - name: "customerId"
+        in: "query"
+        description: "To retrieve the shipments tracking from a specific customer"
+        required: false
+        type: "string"
+      - name: "fields"
+        in: "query"
+        description: "list of fields returned in response"
+        required: false
+        type: "string"
+      - name: "orderId"
+        in: "query"
+        description: "Id of the order whose shipment has to be fetched"
+        required: false
+        type: "string"
+      - name: "page"
+        in: "query"
+        description: "page, positive integer, starts with 0"
+        required: false
+        type: "string"
+      - name: "query"
+        in: "query"
+        description: "RQL command"
+        required: false
+        type: "string"
+      - name: "size"
+        in: "query"
+        description: "page size, positive integer greater than 0"
+        required: false
+        type: "string"
+      - name: "sort"
+        in: "query"
+        description: "data sort parameter, starts with '+' or '-' prefix; when prefix\
+          \ empty, '+' is default; multiple attributes can be used separated by ','"
+        required: false
+        type: "string"
+      - name: "status"
+        in: "query"
+        description: "Status of shipment"
+        required: false
+        type: "string"
+      - name: "Accept"
+        in: "header"
+        description: "The Accept request HTTP header advertises which content types,\
+          \ expressed as MIME types, the client is able to understand. Using content\
+          \ negotiation, the server then selects one of the proposals, uses it and\
+          \ informs the client of its choice with the Content-Type response header.\
+          \ Browsers set adequate values for this header depending on the context\
+          \ where the request is done: when fetching a CSS stylesheet a different\
+          \ value is set for the request than when fetching an image, video or a script."
+        required: false
+        type: "string"
+      - name: "Date"
+        in: "header"
+        description: "The Date general HTTP header contains the date and time at which\
+          \ the message was originated."
+        required: false
+        type: "string"
+      - name: "X-Server-Authentication"
+        in: "header"
+        description: "Authentication header used to transport server apiKey or accessToken\
+          \ (opaque or JWT format)."
+        required: false
+        type: "string"
+      - name: "X-Real-IP"
+        in: "header"
+        description: "used to send original client IP address"
+        required: false
+        type: "string"
+      - name: "X-Client-Version"
+        in: "header"
+        description: "used to send client version"
+        required: false
+        type: "string"
+      - name: "X-Request-Tracking-Id"
+        in: "header"
+        description: "used to send request tracking id (Spring Cloud Sleuth TraceID)"
+        required: true
+        type: "string"
+      - name: "X-Request-Id"
+        in: "header"
+        description: "used to send request id (Spring Cloud Sleuth SpanID)"
+        required: true
+        type: "string"
+      - name: "X-Request-Session-Id"
+        in: "header"
+        description: "used to send session id of current request id"
+        required: true
+        type: "string"
+      - name: "X-Client-Id"
+        in: "header"
+        description: "used to identify which system is currently making the call"
+        required: false
+        type: "string"
+      - name: "X-Originator-Id"
+        in: "header"
+        description: "used to mark the system that actually started the call"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          headers:
+            X-Content-Range:
+              type: "string"
+              description: "returns paging info in format {page}/{limit}/{results}|*"
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ShipmentTracking"
+        206:
+          description: "Partial content"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        207:
+          description: "Warning or info"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        400:
+          description: "Bad format request"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Not authenticated"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Not authorized"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not found"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        408:
+          description: "Request timeout"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Business rules exceptions"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        422:
+          description: "Business input parameter validation error"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Server error"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        504:
+          description: "Backend not available"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+      deprecated: false
+    post:
+      tags:
+      - "Shipment Tracking"
+      summary: "creates new ShipmentTracking"
+      operationId: "postShipmentTracking"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "The ShipmentTracking to be created"
+        required: true
+        schema:
+          $ref: "#/definitions/ShipmentTracking"
+      - name: "Accept"
+        in: "header"
+        description: "The Accept request HTTP header advertises which content types,\
+          \ expressed as MIME types, the client is able to understand. Using content\
+          \ negotiation, the server then selects one of the proposals, uses it and\
+          \ informs the client of its choice with the Content-Type response header.\
+          \ Browsers set adequate values for this header depending on the context\
+          \ where the request is done: when fetching a CSS stylesheet a different\
+          \ value is set for the request than when fetching an image, video or a script."
+        required: false
+        type: "string"
+      - name: "Content-Length"
+        in: "header"
+        description: "The Content-Length header indicates the size of the message\
+          \ body, in bytes, sent to the recipient."
+        required: false
+        type: "integer"
+      - name: "Date"
+        in: "header"
+        description: "The Date general HTTP header contains the date and time at which\
+          \ the message was originated."
+        required: false
+        type: "string"
+      - name: "X-Server-Authentication"
+        in: "header"
+        description: "Authentication header used to transport server apiKey or accessToken\
+          \ (opaque or JWT format)."
+        required: false
+        type: "string"
+      - name: "X-Real-IP"
+        in: "header"
+        description: "used to send original client IP address"
+        required: false
+        type: "string"
+      - name: "X-Client-Version"
+        in: "header"
+        description: "used to send client version"
+        required: false
+        type: "string"
+      - name: "X-Request-Tracking-Id"
+        in: "header"
+        description: "used to send request tracking id (Spring Cloud Sleuth TraceID)"
+        required: true
+        type: "string"
+      - name: "X-Request-Id"
+        in: "header"
+        description: "used to send request id (Spring Cloud Sleuth SpanID)"
+        required: true
+        type: "string"
+      - name: "X-Request-Session-Id"
+        in: "header"
+        description: "used to send session id of current request id"
+        required: true
+        type: "string"
+      - name: "X-Client-Id"
+        in: "header"
+        description: "used to identify which system is currently making the call"
+        required: false
+        type: "string"
+      - name: "X-Originator-Id"
+        in: "header"
+        description: "used to mark the system that actually started the call"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/ShipmentTracking"
+        201:
+          description: "ShipmentTracking created successfully"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/ShipmentTracking"
+        206:
+          description: "Partial content"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        207:
+          description: "Warning or info"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        400:
+          description: "Bad format request"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Not authenticated"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Not authorized"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not found"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        408:
+          description: "Request timeout"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Business rules exceptions"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        422:
+          description: "Business input parameter validation error"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Server error"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        504:
+          description: "Backend not available"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+      deprecated: false
+  /shipmentTracking/{id}:
+    get:
+      tags:
+      - "Shipment Tracking"
+      summary: "Retrieve tracking details of a shipment by tracking id"
+      operationId: "getShipmentTrackingByTrackingId"
+      consumes: []
+      parameters:
+      - name: "fields"
+        in: "query"
+        description: "list of fields returned in response"
+        required: false
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "Id of the shipment that needs to be fetched"
+        required: true
+        type: "string"
+      - name: "Accept"
+        in: "header"
+        description: "The Accept request HTTP header advertises which content types,\
+          \ expressed as MIME types, the client is able to understand. Using content\
+          \ negotiation, the server then selects one of the proposals, uses it and\
+          \ informs the client of its choice with the Content-Type response header.\
+          \ Browsers set adequate values for this header depending on the context\
+          \ where the request is done: when fetching a CSS stylesheet a different\
+          \ value is set for the request than when fetching an image, video or a script."
+        required: false
+        type: "string"
+      - name: "Date"
+        in: "header"
+        description: "The Date general HTTP header contains the date and time at which\
+          \ the message was originated."
+        required: false
+        type: "string"
+      - name: "X-Server-Authentication"
+        in: "header"
+        description: "Authentication header used to transport server apiKey or accessToken\
+          \ (opaque or JWT format)."
+        required: false
+        type: "string"
+      - name: "X-Real-IP"
+        in: "header"
+        description: "used to send original client IP address"
+        required: false
+        type: "string"
+      - name: "X-Client-Version"
+        in: "header"
+        description: "used to send client version"
+        required: false
+        type: "string"
+      - name: "X-Request-Tracking-Id"
+        in: "header"
+        description: "used to send request tracking id (Spring Cloud Sleuth TraceID)"
+        required: true
+        type: "string"
+      - name: "X-Request-Id"
+        in: "header"
+        description: "used to send request id (Spring Cloud Sleuth SpanID)"
+        required: true
+        type: "string"
+      - name: "X-Request-Session-Id"
+        in: "header"
+        description: "used to send session id of current request id"
+        required: true
+        type: "string"
+      - name: "X-Client-Id"
+        in: "header"
+        description: "used to identify which system is currently making the call"
+        required: false
+        type: "string"
+      - name: "X-Originator-Id"
+        in: "header"
+        description: "used to mark the system that actually started the call"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/ShipmentTracking"
+        206:
+          description: "Partial content"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        207:
+          description: "Warning or info"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        400:
+          description: "Bad format request"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Not authenticated"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Not authorized"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not found"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        408:
+          description: "Request timeout"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Business rules exceptions"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        422:
+          description: "Business input parameter validation error"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Server error"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        504:
+          description: "Backend not available"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+      deprecated: false
+    patch:
+      tags:
+      - "Shipment Tracking"
+      summary: "updates ShipmentTracking"
+      operationId: "patchShipmentTrackingUsingPATCH"
+      parameters:
+      - in: "body"
+        name: "ShipmentTracking"
+        description: "ShipmentTracking"
+        required: true
+        schema:
+          $ref: "#/definitions/ShipmentTracking"
+      - name: "fields"
+        in: "query"
+        description: "list of fields that needs to be changed in PATCH method"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "id"
+        required: true
+        type: "string"
+      - name: "Accept"
+        in: "header"
+        description: "The Accept request HTTP header advertises which content types,\
+          \ expressed as MIME types, the client is able to understand. Using content\
+          \ negotiation, the server then selects one of the proposals, uses it and\
+          \ informs the client of its choice with the Content-Type response header.\
+          \ Browsers set adequate values for this header depending on the context\
+          \ where the request is done: when fetching a CSS stylesheet a different\
+          \ value is set for the request than when fetching an image, video or a script."
+        required: false
+        type: "string"
+      - name: "Content-Length"
+        in: "header"
+        description: "The Content-Length header indicates the size of the message\
+          \ body, in bytes, sent to the recipient."
+        required: false
+        type: "integer"
+      - name: "Date"
+        in: "header"
+        description: "The Date general HTTP header contains the date and time at which\
+          \ the message was originated."
+        required: false
+        type: "string"
+      - name: "X-Server-Authentication"
+        in: "header"
+        description: "Authentication header used to transport server apiKey or accessToken\
+          \ (opaque or JWT format)."
+        required: false
+        type: "string"
+      - name: "X-Real-IP"
+        in: "header"
+        description: "used to send original client IP address"
+        required: false
+        type: "string"
+      - name: "X-Client-Version"
+        in: "header"
+        description: "used to send client version"
+        required: false
+        type: "string"
+      - name: "X-Request-Tracking-Id"
+        in: "header"
+        description: "used to send request tracking id (Spring Cloud Sleuth TraceID)"
+        required: true
+        type: "string"
+      - name: "X-Request-Id"
+        in: "header"
+        description: "used to send request id (Spring Cloud Sleuth SpanID)"
+        required: true
+        type: "string"
+      - name: "X-Request-Session-Id"
+        in: "header"
+        description: "used to send session id of current request id"
+        required: true
+        type: "string"
+      - name: "X-Client-Id"
+        in: "header"
+        description: "used to identify which system is currently making the call"
+        required: false
+        type: "string"
+      - name: "X-Originator-Id"
+        in: "header"
+        description: "used to mark the system that actually started the call"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "ShipmentTracking updated successfully"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/ShipmentTracking"
+        206:
+          description: "Partial content"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        207:
+          description: "Warning or info"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        400:
+          description: "Bad format request"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        401:
+          description: "Not authenticated"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        403:
+          description: "Not authorized"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        404:
+          description: "Not found"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        408:
+          description: "Request timeout"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        409:
+          description: "Business rules exceptions"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        422:
+          description: "Business input parameter validation error"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        429:
+          description: "Too many requests"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        500:
+          description: "Server error"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+        504:
+          description: "Backend not available"
+          headers:
+            Date:
+              type: "string"
+              description: "The Date general HTTP header contains the date and time\
+                \ at which the message was originated."
+            Content-Length:
+              type: "string"
+              description: "The Content-Length header indicates the size of the message\
+                \ body, in bytes, sent to the recipient."
+            X-Request-Tracking-Id:
+              type: "string"
+              description: "used to send request tracking id (Spring Cloud Sleuth\
+                \ TraceID)"
+            X-Request-Id:
+              type: "string"
+              description: "used to send request id (Spring Cloud Sleuth SpanID)"
+            X-Request-Session-Id:
+              type: "string"
+              description: "used to send session id of current request id"
+            X-Client-Id:
+              type: "string"
+              description: "used to identify which system is currently making the\
+                \ call)"
+            X-Originator-Id:
+              type: "string"
+              description: "used to mark the system that actually started the call"
+          schema:
+            $ref: "#/definitions/Error"
+      deprecated: false
+securityDefinitions:
+  accessToken:
+    description: "Access token in JWT or opaque format sent in HTTP Authorization\
+      \ header, Bearer schema"
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+  apiKey:
+    description: "API key for technical accounts (opaque format) sent in HTTP Authorization\
+      \ header, no schema"
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  Address:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the address"
+      href:
+        type: "string"
+        description: "An URI used to access to the address resource"
+      addressRole:
+        description: "Address role"
+        $ref: "#/definitions/AddressRoleReference"
+      validFor:
+        description: "Address role validity"
+        $ref: "#/definitions/TimePeriod"
+      streetNr:
+        type: "string"
+        description: "Number identifying a specific property on a public street. It\
+          \ may be combined with streetNrLast for ranged addresses"
+      streetNrSuffix:
+        type: "string"
+        description: "The first street number suffix"
+      streetNrLast:
+        type: "string"
+        description: "Last number in a range of street numbers allocated to a property"
+      streetNrLastSuffix:
+        type: "string"
+        description: "Last street number suffix for a ranged address"
+      streetName:
+        type: "string"
+        description: "Name of the street or other street type"
+      streetType:
+        type: "string"
+        description: "Alley, avenue, boulevard, brae, crescent, drive, highway, lane,\
+          \ terrace, parade, place, tarn, way, wharf"
+      streetSuffix:
+        type: "string"
+        description: "A modifier denoting a relative direction"
+      postcode:
+        type: "string"
+        description: "Descriptor for a postal delivery area, used to speed and simplify\
+          \ the delivery of mail (also known as zipcode)"
+      locality:
+        type: "string"
+        description: "Locality (suburb, principality, ...)"
+      city:
+        type: "string"
+        description: "City that the address is in"
+      stateOrProvince:
+        type: "string"
+        description: "The State or Province that the address is in"
+      country:
+        type: "string"
+        description: "Country(ISO 3166-1 alpha-3 digit code) that the address is in"
+      geoCode:
+        description: "Geographic code of the address"
+        $ref: "#/definitions/GeoCode"
+      fullAddressName:
+        type: "string"
+        description: "Full address name used for presentation purposes"
+      characteristics:
+        type: "array"
+        description: "Telecom specific characteristics"
+        items:
+          $ref: "#/definitions/Characteristic"
+      location:
+        description: "Geographical location of the address"
+        $ref: "#/definitions/Location"
+      subAddresses:
+        type: "array"
+        description: "Addressing within a property (building, floor, ...)"
+        items:
+          $ref: "#/definitions/SubAddress"
+      note:
+        type: "string"
+        description: "Note"
+      audit:
+        description: "Used to provide an Audit object"
+        $ref: "#/definitions/Audit"
+      addressSpecRef:
+        description: "Address specification reference"
+        $ref: "#/definitions/VersionReference"
+    title: "Address"
+    description: "Structured textual way of describing how to find a Property in an\
+      \ urban area (country properties are often defined differently)."
+  AddressRoleReference:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Address role reference identifier"
+      href:
+        type: "string"
+        description: "Address role reference Hypertext Reference"
+      role:
+        type: "string"
+        description: "Address role reference role  \n* `legal` legal role  \n* `billDelivery`\
+          \ billDelivery role  \n* `notificationDelivery` notificationDelivery role\
+          \  \n* `goodsDelivery` goodsDelivery role  "
+        enum:
+        - "goodsDelivery"
+        - "contact"
+        - "billDelivery"
+        - "installation"
+        - "legal"
+        - "main"
+      name:
+        type: "string"
+        description: "Address role reference name"
+      validFor:
+        description: "The time period that the role is valid for"
+        $ref: "#/definitions/TimePeriod"
+    title: "AddressRoleReference"
+    description: "Used to provide information on Address role reference object"
+  Audit:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Audit ID."
+      createdBy:
+        type: "string"
+        description: "User that created the record."
+      createdDate:
+        type: "string"
+        format: "date-time"
+        description: "Date when the record was created."
+      changedBy:
+        type: "string"
+        description: "User who modified the record"
+      changedDate:
+        type: "string"
+        format: "date-time"
+        description: "Date when the record was modified."
+      entityVersion:
+        type: "string"
+        description: "Version of record. Starts with 0 on insert and is increased\
+          \ by one on each update. -1 for deleted records."
+      tagId:
+        type: "string"
+        description: "Tag Id."
+      spanId:
+        type: "string"
+        description: "Span Id."
+      changeReason:
+        type: "string"
+        description: "Reason why change has made."
+      sourceSystem:
+        type: "string"
+        description: "Source system that initiated change."
+      sourceSystemUser:
+        type: "string"
+        description: "Source system User that initiated change."
+      characteristics:
+        type: "array"
+        description: "List of characteristics"
+        items:
+          $ref: "#/definitions/Characteristic"
+    title: "Audit"
+    description: "Used to provide auditing data."
+  Characteristic:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "characteristic name"
+      value:
+        type: "string"
+        description: "characteristic value"
+    title: "Characteristic"
+  CheckpointType:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        description: "Status of the package at the time of the scan event"
+      message:
+        type: "string"
+        description: "Message describing the performed action e.g.: attempted delivery,\
+          \ departed from warehouse..."
+      date:
+        type: "string"
+        format: "date-time"
+        description: "Date"
+      checkPost:
+        type: "string"
+        description: "Location display name"
+      city:
+        type: "string"
+        description: "Local administrative name such as a city, town, municipality\
+          \ or council, partido, concello, etc. that might comprise smaller entities"
+      stateOrProvince:
+        type: "string"
+        description: "Region, state, or province"
+      country:
+        type: "string"
+        description: "Country(ISO 3166-1 alpha-3 digit code) that the address is in"
+      characteristics:
+        type: "array"
+        description: "List of characteristics"
+        items:
+          $ref: "#/definitions/Characteristic"
+    title: "CheckpointType"
+    description: "Checkpoint Type"
+  CustomerRefType:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Customer ID"
+      href:
+        type: "string"
+        description: "Resource URI"
+      name:
+        type: "string"
+        description: "Customer name"
+      description:
+        type: "string"
+        description: "Customer description"
+    title: "CustomerRefType"
+    description: "Related customer on shipment tracking"
+  Error:
+    type: "object"
+    required:
+    - "code"
+    - "id"
+    - "timestamp"
+    properties:
+      id:
+        type: "string"
+        description: "Unique error ID, used for logging purposes, UUID format"
+      code:
+        type: "string"
+        description: "A string coding the error type. This is given to caller so he\
+          \ can translate them if required."
+      timestamp:
+        type: "string"
+        format: "date-time"
+        description: "Exact time of error"
+      isTitleEnabled:
+        type: "boolean"
+        description: "A boolean that provides info is will title be shown."
+      message:
+        type: "string"
+        description: "A short localized string that describes the error."
+      title:
+        type: "string"
+        description: "A localized string used for error title."
+      htmlLabel:
+        type: "string"
+        description: "A localized string used for error presentation. Label with HTML\
+          \ support"
+      label:
+        type: "string"
+        description: "A localized string used for error presentation."
+      retryable:
+        type: "boolean"
+        description: "A boolean that provides info is request retryable"
+      severity:
+        type: "string"
+        description: "Describes severity of error. Order from most to least critical\
+          \ is: FATAL, ERROR, WARN, INFO, DEBUG, TRACE\n* `FATAL` Designates very\
+          \ severe error events that will presumably lead the application to abort.\
+          \  \n* `ERROR` Designates error events that might still allow the application\
+          \ to continue running.  \n* `WARN` Designates potentially harmful situations.\
+          \  \n* `INFO` Designates informational messages that highlight the progress\
+          \ of the application at coarse-grained level.  \n* `DEBUG` Designates fine-grained\
+          \ informational events that are most useful to debug an application.  \n\
+          * `TRACE` Designates finer-grained informational events than the DEBUG. "
+        enum:
+        - "FATAL"
+        - "ERROR"
+        - "WARN"
+        - "INFO"
+        - "DEBUG"
+        - "TRACE"
+      details:
+        type: "array"
+        description: "Exception detailed info"
+        items:
+          type: "object"
+          properties: {}
+    title: "Error"
+    description: "Default error message template"
+  GeoCode:
+    type: "object"
+    properties:
+      latitude:
+        type: "string"
+        description: "Geographic latitude"
+      longitude:
+        type: "string"
+        description: "Geographic longitude"
+      geographicDatum:
+        type: "string"
+        description: "Geodetic datum"
+    title: "GeoCode"
+    description: "Used to provide information on geographic code. Deprecated and shouldn't\
+      \ be used. Use \"location\" instead."
+  Location:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique Identifier of a GeoLocation"
+      href:
+        type: "string"
+        description: "Href of the GeoLocation"
+      name:
+        type: "string"
+        description: "Name of a GeoLocation"
+      geometryType:
+        type: "string"
+        description: "Type allows describing Geolocation form: it could be a point,\
+          \ a line, a polygon, a cylinder, etc..."
+      accuracy:
+        type: "string"
+        description: "Accuracy"
+      spatialRef:
+        type: "string"
+        description: "Spatial reference"
+      geometry:
+        type: "array"
+        description: "Geographical points related to location"
+        items:
+          $ref: "#/definitions/Point"
+    title: "Location"
+    description: "A GeographicLocation allows describing through coordinate(s) a point,\
+      \ a line or a space."
+  OrderRefType:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the order"
+      href:
+        type: "string"
+        description: "URI where to query or perform actions on the order"
+      name:
+        type: "string"
+        description: "Screen name of the order"
+      referredType:
+        type: "string"
+        description: "Type of the referred order in case it is polymorphic"
+    title: "OrderRefType"
+    description: "Reference to an order that can typically be queried with another\
+      \ API"
+  Point:
+    type: "object"
+    properties:
+      x:
+        type: "string"
+        description: "x coordinate (usually latitude)"
+      y:
+        type: "string"
+        description: "y coordinate (usually longitude)"
+      z:
+        type: "string"
+        description: "z coordinate (usually elevation)"
+    title: "Point"
+    description: "A GeographicPoint defines a geographic point through coordinates."
+  ShipmentTracking:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the shipment"
+      href:
+        type: "string"
+        description: "Reference to the shipment to be queried or to perform actions\
+          \ on it via API"
+      carrier:
+        type: "string"
+        description: "Carrier that is performing the shipment"
+      trackingCode:
+        type: "string"
+        description: "Tracking code in the carrier network"
+      carrierTrackingUrl:
+        type: "string"
+        description: "URL to a public page provided by the carrier that shows tracking\
+          \ details for this tracker"
+      trackingDate:
+        type: "string"
+        format: "date-time"
+        description: "Date when the shipment began to be tracked"
+      status:
+        type: "string"
+        description: "Current status of the package  \n* `initialized` Package shipment\
+          \ is initialized  \n* `inProcess` Package packing is in process  \n* `processed`\
+          \ Package packing was processed  \n* `shipped` Pacakage is shipped  \n*\
+          \ `inCustoms` Pacakage is in customs  \n* `delivered` Pacakage is delivered\
+          \  \n* `returned` Pacakage is returned  \n* `error` Pacakage shipment status\
+          \ is undetermined  "
+        enum:
+        - "initialized"
+        - "inProcess"
+        - "processed"
+        - "shipped"
+        - "inCustoms"
+        - "delivered"
+        - "returned"
+        - "error"
+      statusChangeDate:
+        type: "string"
+        format: "date-time"
+        description: "Date when the tracking status last changed"
+      statusChangeReason:
+        type: "string"
+        description: "Text describing the reason for the status of the tracking"
+      weight:
+        type: "number"
+        format: "float"
+        description: "Weight of the package in grams"
+      estimatedDeliveryDate:
+        type: "string"
+        format: "date-time"
+        description: "Estimated deliveryDate"
+      addressFrom:
+        description: "Structured textual way of describing how to find a Property\
+          \ in an urban area (country properties are often defined differently)"
+        $ref: "#/definitions/Address"
+      addressTo:
+        description: "Structured textual way of describing how to find a Property\
+          \ in an urban area (country properties are often defined differently)"
+        $ref: "#/definitions/Address"
+      checkpoint:
+        type: "array"
+        description: "Checkpoint Type"
+        items:
+          $ref: "#/definitions/CheckpointType"
+      order:
+        type: "array"
+        description: "Order that triggered this shipment"
+        items:
+          $ref: "#/definitions/OrderRefType"
+      relatedCustomer:
+        description: "Related customer on shipment tracking"
+        $ref: "#/definitions/CustomerRefType"
+      createDate:
+        type: "string"
+        format: "date-time"
+        description: "Date when tracking shipment was created"
+      characteristics:
+        type: "array"
+        description: "List of characteristics"
+        items:
+          $ref: "#/definitions/Characteristic"
+    title: "ShipmentTracking"
+    description: "Shipment Tracking Type"
+  SubAddress:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique Identifier of the subAddress"
+      href:
+        type: "string"
+        description: "Href of the subAddress"
+      type:
+        type: "string"
+        description: "Type of subAddress: it can be a subunit or a private street"
+      name:
+        type: "string"
+        description: "Name of the subAddress to identify it with a meaningful identification"
+      subUnitType:
+        type: "string"
+        description: "The type of subunit e.g.BERTH, FLAT, PIER, SUITE, SHOP, TOWER,\
+          \ UNIT, WHARF."
+      subUnitNumber:
+        type: "string"
+        description: "The discriminator used for the subunit often just a simple number\
+          \ e.g. FLAT 5, may also be a range"
+      levelType:
+        type: "string"
+        description: "Describes level types within a building"
+      levelNumber:
+        type: "string"
+        description: "Used where a level type may be repeated e.g. BASEMENT 1, BASEMENT\
+          \ 2"
+      buildingName:
+        type: "string"
+        description: "Allows for buildings that have well-known names"
+      privateStreetNumber:
+        type: "string"
+        description: "Private streets numbers internal to a private street"
+      privateStreetName:
+        type: "string"
+        description: "Private streets internal to a property (e.g. a university) may\
+          \ have internal names that are not recorded by the land title office"
+      characteristics:
+        type: "array"
+        description: "Telecom specific characteristics"
+        items:
+          $ref: "#/definitions/Characteristic"
+    title: "SubAddress"
+    description: "It is used for addressing within a property in an urban area (country\
+      \ properties are often defined differently). It may refer to a building, a building\
+      \ cluster, or a floor of a multistory building."
+  TimePeriod:
+    type: "object"
+    properties:
+      startDateTime:
+        type: "string"
+        format: "date-time"
+        description: "Beginning of the time period"
+      endDateTime:
+        type: "string"
+        format: "date-time"
+        description: "End of the time period"
+    title: "TimePeriod"
+  VersionReference:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique identifier of the Reference"
+      href:
+        type: "string"
+        description: "URI of the Reference"
+      name:
+        type: "string"
+        description: "Name of the Reference"
+      version:
+        type: "string"
+        description: "Version of the Reference"
+    title: "VersionReference"
+    description: "Generic link to another versioning resource"
+
